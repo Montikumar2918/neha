@@ -1,0 +1,49 @@
+//--------------------------------------------------------------
+//   FOOTER
+// -----------------------------------------------------------
+.bg-subscribe{
+    background-color: $light-primary;
+    .input-group{
+        .form-control{
+            border-top-left-radius: 24px;
+            border-bottom-left-radius: 24px;
+            height: 40px!important;
+        }
+        .input-group-text{
+            border-top-right-radius: 24px;
+            border-bottom-right-radius: 24px;
+            background-color: $primary;
+            color:white;
+        }
+    }
+}
+
+footer{
+    background-color: $lighter-primary;
+    color: $white;
+    .nav-heading{
+        color: $primary;
+    }
+    a{
+        color: $dark!important;
+        @include hover{
+            color: $primary;
+        }
+    }
+    .social-icons{
+        a{
+            border: 1px solid #F2F2F2;
+            background-color: rgba($white, 0.1);
+            @include rounded(0);    
+            @include size(40px);
+            padding: 4px;
+            fill: $white;
+            @include hover(){
+                fill: $primary;
+            }   
+            @include first-child(){
+                padding: 6px;
+            }     
+        }
+    }
+}

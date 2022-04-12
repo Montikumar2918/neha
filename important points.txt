@@ -1,0 +1,15 @@
+// STRUCTURE OF WEB
+
+npm install react-bootstrap bootstrap@5.1.3 ------- INSTALL REACT BOOTSTRAP
+npm i sass ---- INSTALLED SASS
+npm i bootstrap-icons ------- install bootstrap icons
+npm install react-player ---- Video Player
+npm i react-slick ---------- Download react slick  https://react-slick.neostack.com/docs/example/responsive/
+npm install slick-carousel --save ----------------- need to install foe css of slick it comes with react slick
+npm install @googlemaps/react-wrapper ------------ google map
+npm i react-responsive-masonry --save ---------------------- masonry for card to columns
+
+
+COMMAND
+
+sass --watch --no-source-map home.scss:../css/home.css pro_details.scss:../css/pro_details.css  faq.scss:../css/faq.css 

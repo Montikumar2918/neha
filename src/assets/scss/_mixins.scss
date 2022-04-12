@@ -1,0 +1,225 @@
+
+// FUNCTIONS
+$known-prefixes: webkit, moz, ms, o;
+
+@mixin prefix($prefixes, $property, $value) {
+  @each $prefix in $prefixes {
+    @if not index($known-prefixes, $prefix) {
+      @warn "Unknown prefix #{$prefix}.";
+    }
+
+    -#{$prefix}-#{$property}: $value;
+  }
+  #{$property}: $value;
+}
+
+// theme mixins css ----------------------
+
+@mixin background-gradient($startColor, $endColor, $orientation) {
+    background: $startColor;
+    @if $orientation == 'vertical' {
+      background: -webkit-linear-gradient(top, $startColor, $endColor);
+      background: linear-gradient(to bottom, $startColor, $endColor);
+    } @else if $orientation == 'horizontal' {
+      background: -webkit-linear-gradient(left, $startColor, $endColor);
+      background: linear-gradient(to right, $startColor, $endColor);
+    } @else {
+      background: -webkit-radial-gradient(center, ellipse cover, $startColor, $endColor);
+      background: radial-gradient(ellipse at center, $startColor, $endColor);
+    }
+}
+
+@mixin size($length){
+  width: $length;
+  height: $length;
+}   
+
+@mixin hover(){
+  &:hover, &:active, &:focus{
+    @content;
+  }
+}
+ 
+@mixin first-child() {
+    &:first-of-type {
+      @content;
+    }
+  }
+
+@mixin last-child() {
+    &:last-of-type {
+      @content;
+    }
+  }
+
+@mixin even(){
+    &:nth-child(even) {
+      @content;
+    }
+  }
+
+@mixin odd(){
+  &:nth-child(odd) {
+    @content;
+  }
+}
+// It will select child on given number
+@mixin child($num) {
+    &:nth-child(#{$num}) {
+    @content;
+  }
+}
+
+// It will select from first to last child on given number
+@mixin first($num) {
+
+    @if $num == 1 {
+      &:first-child {
+        @content;
+      }
+    }
+  
+    @else {
+      &:nth-child(-n + #{$num}) {
+        @content;
+      }
+    }
+  }
+
+// It will select from last to first child on given number
+  @mixin last($num) {
+    &:nth-last-child(-n + #{$num}) {
+    @content;
+  }
+} 
+
+// The following mixin will allow you to select all elements after a certain number, for this example we're passing in the number 4 which means the mixin will highlight elements 5-10 if there are 10 elemnets to select.
+@mixin after($num) {
+    &:nth-child(n+#{$num + 1}) {
+      @content;
+    }
+  }
+
+// Using this mixin you are able to select a certain element from the end of the group of elements, for this example we're passing in the number 4 again and the mixin will select the 4th element from the end being number 7 if there are 10 elemnets to select.
+  @mixin from-end($num) {
+    &:nth-last-child(#{$num}) {
+    @content;
+    }
+  }
+
+// Select Between Two Elements
+  @mixin between($first,$last) {
+    &:nth-child(n+#{$first}):nth-child(-n+#{$last}) {
+      @content;
+    }
+  }
+
+//Select All But One
+//To select all the elements excluding one use the following mixin, just pass in the number you want to exclude and all will be highlighted apart from this number.
+  @mixin all-but($num) {
+    &:not(:nth-child(#{$num})) {
+      @content;
+    }
+  }
+
+@mixin padding($padding-property){
+  padding: $padding-property;
+} 
+
+@mixin px($padding-property){
+  padding-left: $padding-property;
+  padding-right: $padding-property;
+}
+@mixin py($padding-property){
+  padding-top: $padding-property;
+  padding-bottom: $padding-property;
+}
+
+@mixin position($value, $positions){
+  position: $value;
+  $positions: parseDirections($positions);
+  top: map-get($positions,'top');
+  right: map-get($positions,'right');
+  bottom: map-get($positions,'bottom');
+  left: map-get($positions,'left');
+}
+
+@function parseDirections($directions){
+  $top: 0; $bottom: 0; $left: 0; $right: 0;
+    
+  @if length($directions) > 0{
+    $d1: nth($directions,1);
+    $top: $d1; $bottom: $d1; $left: $d1; $right: $d1; 
+  }@if length($directions) > 1 {
+    $d2: nth($directions,2);
+    $left: $d2; $right: $d2; 
+  }@if length($directions) > 2 {
+    $d3: nth($directions,3);
+    $bottom: $d3;
+  }@if length($directions) > 3 {
+    $d4: nth($directions,4);
+    $left: $d4
+  }
+  
+  @return (
+    top: $top,
+    bottom: $bottom,
+    left: $left,
+    right: $right
+  );
+}
+
+@mixin transform($transform-property) {
+    -ms-transform: $transform-property;
+    -o-transform: $transform-property;
+    -moz-transform: $transform-property;
+    -webkit-transform: $transform-property;
+    transform: $transform-property;
+}
+
+@mixin filter($filter-property){
+    filter: $filter-property;
+    -ms-filter: $filter-property;
+    -webkit-filter: $filter-property;
+    -o-filter: $filter-property;
+    -moz-filter: $filter-property;
+}
+
+@mixin transition($transition-property){
+  transition:$transition-property;
+  -moz-transitiozn:$transition-property;
+  -ms-transition:$transition-property;   
+  -o-transition:$transition-property;
+  -webkit-transition:$transition-property;
+}
+
+@mixin rounded($rounded-property){
+  border-radius:$rounded-property;
+  -ms-border-radius:$rounded-property;
+  -o-border-radius:$rounded-property;
+  -webkit-border-radius:$rounded-property;
+  -moz-border-radius:$rounded-property;
+} 
+
+@mixin shadow($shadow-property){
+  box-shadow: $shadow-property;
+  -ms-box-shadow: $shadow-property;
+  -moz-box-shadow: $shadow-property;
+  -o-box-shadow: $shadow-property;
+  -webkit-box-shadow: $shadow-property;
+} 
+
+
+// box-shadow
+@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
+  @if $inset {
+    -webkit-box-shadow:inset $top $left $blur $color;
+    -moz-box-shadow:inset $top $left $blur $color;
+    box-shadow:inset $top $left $blur $color;
+  } @else {
+    -webkit-box-shadow: $top $left $blur $color;
+    -moz-box-shadow: $top $left $blur $color;
+    box-shadow: $top $left $blur $color;
+  }
+}
+

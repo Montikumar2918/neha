@@ -1,0 +1,18 @@
+@import "bootstrap.scss";
+@import "_common.scss";
+
+
+/*--------------------------------------------------------------
+# FAQ PAGE START
+--------------------------------------------------------------*/
+
+.faq{
+    .heading .accordion-button{
+        @include media-breakpoint-up(md){
+            font-size: rfs-value(24px);
+        }
+    }
+}
+
+
+  
